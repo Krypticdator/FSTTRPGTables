@@ -38,10 +38,6 @@ class Table(object):
         if to > self.max:
             self.max = to
 
-    def extract_from_array(self, array):
-        for row in array:
-            self.add_option(row)
-
     def extract_option_from_json(self, option):
         fr = int(option['fr'])
         to = int(option['to'])
