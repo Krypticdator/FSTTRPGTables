@@ -42,13 +42,7 @@ class Table(object):
         fr = int(option['fr'])
         to = int(option['to'])
         re = str(option['result'])
-        if fr != to:
-            for i in range(fr, to):
-                self.options[i] = re
-        else:
-            self.options[fr] = re
-        if to > self.max:
-            self.max = to
+        self.add_option(fr, to, re)
 
     def results(self):
         results = []

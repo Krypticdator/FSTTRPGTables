@@ -33,23 +33,17 @@ class TraitsTable(HasTraits):
         db_mgr = DBManager()
 
         if db_mgr.fuzion_tables.count_options(tablename) > 0:
-            table = db_mgr.fuzion_tables.get_table(tablename)
-            for row in table:
-                option = TraitsTableOption()
-                option.fr = row.fr
-                option.to = row.to
-                option.re = row.re
-                self.options.append(option)
+            pass
         else:
-            table = utilities.get_aws_table(tablename)
-            utilities.save_table_to_db(table)
-            table = db_mgr.fuzion_tables.get_table(tablename)
-            for row in table:
-                option = TraitsTableOption()
-                option.fr = row.fr
-                option.to = row.to
-                option.re = row.re
-                self.options.append(option)
+            t = utilities.get_aws_table(tablename)
+            utilities.save_table_to_db(t)
+        t = db_mgr.fuzion_tables.get_table(tablename)
+        for row in t:
+            option = TraitsTableOption()
+            option.fr = row.fr
+            option.to = row.to
+            option.re = row.re
+            self.options.append(option)
 
     view = View(
         Item('name'),
