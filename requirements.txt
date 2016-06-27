@@ -1,0 +1,4 @@
+requests
+traits
+traitsui
+peewee
