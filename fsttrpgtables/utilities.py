@@ -22,6 +22,8 @@ def save_table_to_db(table):
         to = int(row['to'])
         re = row['result']
         ide = row['identifier']
-        array.append({'identifier': ide, 'fr': fr, 'to': to, 're': re, 'table': row['table_name']})
+        leads_to = row['leads_to']
+        array.append({'identifier': ide, 'fr': fr, 'to': to, 're': re, 'table': row['table_name'],
+                      'leads_to_table': leads_to})
 
     db_mgr.fuzion_tables.add_many((array))

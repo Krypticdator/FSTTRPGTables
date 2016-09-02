@@ -5,6 +5,13 @@ python:
 # command to install dependencies
 install:
   - travis_wait 40 pip install -r requirements.txt
+  - pip install coverage
+  - pip install coveralls
 
 # command to run tests
-script: nosetests
+script:
+  - python test_fsttrpgtables.py
+  - coverage run test_fsttrpgtables.py
+
+after_success:
+  - coveralls
