@@ -64,14 +64,43 @@ class Table(object):
         results.sort()
         return results
 
-    def random_result(self, ):
+    def random_result(self):
         r = randint(1, self.max)
         option = self.options[r].re
 
         return option
 
-    def get_result_chain_string(self):
-        pass
+    def random_option(self):
+        r = randint(1, self.max)
+        option = self.options[r]
+        return option
+
+    def get_result_chain_string(self, index):
+        option = self.options[index]
+        chain_str = self.name + ":" + option.identifier
+        leads_to = option.leads_to
+        while leads_to is not None:
+            table = Table(leads_to)
+            option = table.random_option()
+            leads_to = option.leads_to
+            chain_str = chain_str + "_" + table.name + ":" + option.identifier
+        return chain_str
+
+    def decode_table_chain_string(self, chain):
+        chain = str(chain)
+        split_by_table = chain.split('_')
+        decoded = []
+        for pair in split_by_table:
+            values = pair.split(':')
+            t_name = values[0]
+            identifier = values[1]
+            table = Table(t_name)
+            option = table.get_option(identifier=identifier)
+            pack = {'table': t_name, 'option': option}
+            decoded.append(pack)
+        return decoded
+
+
 
     def multiple_randoms(self, min, max):
         times = randint(min, max)
@@ -87,6 +116,12 @@ class Table(object):
 
     def get_result(self, index):
         return self.options[index]
+
+    def get_option(self, index=None, identifier=None):
+        if identifier:
+            for key, value in self.options.iteritems():
+                if value.identifier == identifier:
+                    return value
 
     def calc_max(self):
         m = self.max

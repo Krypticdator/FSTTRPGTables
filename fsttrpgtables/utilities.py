@@ -22,7 +22,11 @@ def save_table_to_db(table):
         to = int(row['to'])
         re = row['result']
         ide = row['identifier']
-        leads_to = row['leads_to']
+        leads_to = None
+        try:
+            leads_to = row['leads_to']
+        except KeyError:
+            pass
         array.append({'identifier': ide, 'fr': fr, 'to': to, 're': re, 'table': row['table_name'],
                       'leads_to_table': leads_to})
 
