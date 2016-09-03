@@ -75,8 +75,27 @@ class Table(object):
         option = self.options[r]
         return option
 
-    def get_result_chain_string(self, index):
-        option = self.options[index]
+    def get_result_chain_string(self, starting_index, *args):
+        option = self.options[starting_index]
+        chain_str = self.name + ":" + option.identifier
+        leads_to = option.leads_to
+        for arg in args:
+            if leads_to is None:
+                break
+            table = Table(leads_to)
+            try:
+                option = table.get_option(index=arg)
+                leads_to = option.leads_to
+                chain_str = chain_str + "_" + table.name + ":" + option.identifier
+            except KeyError as e:
+                print(str(e))
+                break
+
+
+        return chain_str
+
+    def get_random_chain_string(self, first_index):
+        option = self.options[first_index]
         chain_str = self.name + ":" + option.identifier
         leads_to = option.leads_to
         while leads_to is not None:
@@ -115,13 +134,15 @@ class Table(object):
         return results
 
     def get_result(self, index):
-        return self.options[index]
+        return self.options[index].re
 
     def get_option(self, index=None, identifier=None):
         if identifier:
             for key, value in self.options.iteritems():
                 if value.identifier == identifier:
                     return value
+        elif index:
+            return self.options[index]
 
     def calc_max(self):
         m = self.max

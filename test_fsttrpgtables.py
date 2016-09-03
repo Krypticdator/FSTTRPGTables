@@ -18,9 +18,9 @@ class testTableModel(unittest.TestCase):
         t.add_option(1, 2, 'result1', leads_to=None, identifier='first0')
         t.add_option(3, 3, 'result2', leads_to=None, identifier='first1')
 
-        self.assertEqual(t.get_result(index=1).re, 'result1')
-        self.assertEqual(t.get_result(index=2).re, 'result1')
-        self.assertEqual(t.get_result(index=3).re, 'result2')
+        self.assertEqual(t.get_result(index=1), 'result1')
+        self.assertEqual(t.get_result(index=2), 'result1')
+        self.assertEqual(t.get_result(index=3), 'result2')
 
     def test_table_random_option(self):
         t = Table('test', load_from_name=False)
@@ -30,12 +30,12 @@ class testTableModel(unittest.TestCase):
 
     def test_chaining_tables(self):
         t1 = Table('test', load_from_name=True)
-        chain = t1.get_result_chain_string(index=1)
+        chain = t1.get_result_chain_string(1, 1, 1)
         self.assertEqual(str(chain), 'test:test01_test02:test0201')
 
     def test_chaining_decoding(self):
         t1 = Table('test')
-        chain = t1.get_result_chain_string(index=1)
+        chain = t1.get_result_chain_string(1, 1)
         decoded = t1.decode_table_chain_string(chain)
         print(decoded)
         self.assertTrue(True)
