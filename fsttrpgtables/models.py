@@ -86,7 +86,7 @@ class Table(object):
             try:
                 option = table.get_option(index=arg)
                 leads_to = option.leads_to
-                chain_str = chain_str + "_" + table.name + ":" + option.identifier
+                chain_str = chain_str + "|" + table.name + ":" + option.identifier
             except KeyError as e:
                 print(str(e))
                 break
@@ -102,12 +102,12 @@ class Table(object):
             table = Table(leads_to)
             option = table.random_option()
             leads_to = option.leads_to
-            chain_str = chain_str + "_" + table.name + ":" + option.identifier
+            chain_str = chain_str + "|" + table.name + ":" + option.identifier
         return chain_str
 
     def decode_table_chain_string(self, chain):
         chain = str(chain)
-        split_by_table = chain.split('_')
+        split_by_table = chain.split('|')
         decoded = []
         for pair in split_by_table:
             values = pair.split(':')
