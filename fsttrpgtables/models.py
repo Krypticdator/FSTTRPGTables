@@ -73,7 +73,7 @@ class Table(object):
     def random_option(self):
         r = randint(1, self.max)
         option = self.options[r]
-        return option
+        return (option, r)
 
     def get_result_chain_string(self, starting_index, *args):
         option = self.options[starting_index]
@@ -95,15 +95,18 @@ class Table(object):
         return chain_str
 
     def get_random_chain_string(self, first_index):
+        number_array = []
+        number_array.append(first_index)
         option = self.options[first_index]
         chain_str = self.name + ":" + option.identifier
         leads_to = option.leads_to
         while leads_to is not None:
             table = Table(leads_to)
-            option = table.random_option()
+            option, r = table.random_option()
+            number_array.append(r)
             leads_to = option.leads_to
             chain_str = chain_str + "|" + table.name + ":" + option.identifier
-        return chain_str
+        return (chain_str, number_array)
 
     def decode_table_chain_string(self, chain):
         chain = str(chain)

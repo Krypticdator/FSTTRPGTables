@@ -22,7 +22,7 @@ class testTableModel(unittest.TestCase):
         self.assertEqual(t.get_result(index=2), 'result1')
         self.assertEqual(t.get_result(index=3), 'result2')
 
-    def test_table_random_option(self):
+    def test_table_random_result(self):
         t = Table('test', load_from_name=False)
         t.add_option(1, 1, 'result', leads_to=None, identifier='first')
         result = t.random_result()
@@ -38,4 +38,10 @@ class testTableModel(unittest.TestCase):
         chain = t1.get_result_chain_string(1, 1)
         decoded = t1.decode_table_chain_string(chain)
         print(decoded)
+        self.assertTrue(True)
+
+    def test_random_option(self):
+        t1 = Table('test')
+        random_chain, array = t1.get_random_chain_string(first_index=1)
+        print(array)
         self.assertTrue(True)

@@ -20,8 +20,8 @@ class TraitsTableOption(HasTraits):
         HGroup(
             Item('fr', width=2),
             Item('to', width=2),
-            Item('re'),
-            Item('identifier'),
+            Item('re', width=400),
+            Item('identifier', width=20),
             Item('leads_to')
         )
     )
