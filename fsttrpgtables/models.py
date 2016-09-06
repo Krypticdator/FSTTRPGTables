@@ -122,6 +122,15 @@ class Table(object):
             decoded.append(pack)
         return decoded
 
+    def decode_chain_string_to_results_string(self, chain):
+        decoded_chain = self.decode_table_chain_string(chain)
+        array_of_results = []
+        for table in decoded_chain:
+            option = table['option']
+            array_of_results.append(option.re + " ")
+
+        string_of_results = ''.join(array_of_results)
+        return string_of_results
 
 
     def multiple_randoms(self, min, max):
