@@ -43,6 +43,7 @@ def save_table_to_db(table):
             re = str(re.encode(encoding='utf-8', errors='replace'))
 
         print('type of re in db saving is: ' + str(type(re)))
+        re = re.lower()
         ide = row['identifier']
 
         if isinstance(ide, unicode):

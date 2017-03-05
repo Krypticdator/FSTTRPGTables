@@ -45,3 +45,6 @@ class testTableModel(unittest.TestCase):
         random_chain, array = t1.get_random_chain_string(first_index=1)
         print(array)
         self.assertTrue(True)
+
+    def test_result_string_chain(self):
+        t1 = Table('test')
