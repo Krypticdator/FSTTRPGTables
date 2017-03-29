@@ -1,8 +1,8 @@
 # -*- coding: latin-1 -*-
 from __future__ import print_function
 
-from traits.api import Int, String, List, HasTraits, Instance, Enum, Button
-from traitsui.api import View, HGroup, Item, ListEditor
+from traits.api import Int, String, List, HasTraits, Instance, Enum, Button, File
+from traitsui.api import View, HGroup, Item, ListEditor, VGroup
 
 import utilities
 from db import DBManager
@@ -73,6 +73,36 @@ class TraitsTable(HasTraits):
 
 class Loader(HasTraits):
     table_to_load = Enum(all_table_names)
+    txt_file = File()
+    new_from_txt_file = Button()
+    name = String()
+
+    def _new_from_txt_file_fired(self):
+        file_name = self.txt_file
+        print(file_name)
+        f = open(file_name, 'r')
+        tt = TraitsTable()
+        n = 1
+        ide_n = 0
+        for line in f:
+            string = line[:-1]
+            ide = self.name + str(ide_n)
+            tt.options.append(TraitsTableOption(fr=n, to=n, re=string, identifier=ide))
+            n += 1
+            ide_n += 1
+        tt.configure_traits()
+        f.close()
+
+    view = View(
+        Item('table_to_load'),
+        HGroup(
+            Item('txt_file'),
+            Item('name'),
+            Item('new_from_txt_file', show_label=False)
+        )
+
+    )
+
 
 
 if __name__ == '__main__':

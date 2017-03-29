@@ -61,6 +61,7 @@ def save_table_to_db(table):
 
 def export_to_aws(name, identifier, fr, to, re, leads_to):
     url = 'https://eo7sjt6hvj.execute-api.us-west-2.amazonaws.com/prod/tables/add'
+    re = str.lower(re)
     print('exporting table: ' + str(name) + ' option: ' + str(identifier))
     if leads_to == "":
         leads_to = None

@@ -112,18 +112,20 @@ class Table(object):
         chain = str(chain)
         split_by_table = chain.split('|')
         decoded = []
+        num_array = []
         for pair in split_by_table:
             values = pair.split(':')
             t_name = values[0]
             identifier = values[1]
             table = Table(t_name)
             option = table.get_option(identifier=identifier)
+            num_array.append(option.fr)
             pack = {'table': t_name, 'option': option}
             decoded.append(pack)
-        return decoded
+        return (decoded, num_array)
 
     def decode_chain_string_to_results_string(self, chain):
-        decoded_chain = self.decode_table_chain_string(chain)
+        decoded_chain, array = self.decode_table_chain_string(chain)
         array_of_results = []
         for table in decoded_chain:
             option = table['option']
